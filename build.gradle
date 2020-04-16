@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+// give your project a reasonable group id,
+// optimally based on your unique reverse url
+group 'de.geobe.java2pi'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // not really needed for HelloWorld ;)
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
