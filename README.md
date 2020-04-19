@@ -22,7 +22,8 @@ available on Windows. Scripts use `ssh`, `scp`, `sed` and `unzip`.
 The easiest way found to make these available is installing 
 [Git tools](https://git-scm.com/download/win) 
 and adding the Git `usr\bin` subdirectory to your path.
-In a typical installation this is `C:\Program Files\Git\usr\bin`.
+In a typical installation this is `C:\Program Files\Git\usr\bin`. 
+(See e.g. [here](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/))
  
 #### Prerequisites on linux development system
 Scripts should work out of the box
