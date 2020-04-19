@@ -84,4 +84,4 @@ The following tasks are provided:
    (i.e. no changed resources or added library jars). This task will only work if
    distAll had already been used before.
 1. **distBuildAndRunRemote**  
-   Similar to distAllAndRunRemote.
+   Distribute the latest build and run it, similar to distAllAndRunRemote.
