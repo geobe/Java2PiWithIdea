@@ -29,19 +29,31 @@ In a typical installation this is `C:\Program Files\Git\usr\bin`.
 Scripts should work out of the box
 
 ### Installing the Gradle Tasks
-At the moment, we are using the most basic way to integrate cross development 
+We are using a quite basic way to integrate cross development 
 tasks into the Gradle build script `build.gradle`:
-* Tasks and helper methods are directly coded in build.gradle
+* Tasks and helper methods are coded in crossdev.gradle
 * Site specific parameters are set in gradle.properties
 
-The easiest way to use the cross development tasks is to clone this repository,
+The easiest way to use the cross development tasks is to download the 
+`crossdev.gradle` and `gradle.properties` 
+files into your project folder and include the distribution tasks +
+into your build script with the line  
+`apply from: 'crossdev.gradle'`.  
+Alternatively, you can also clone this repository,
 test, if the simple RaspiHello program is running on your target and substitute 
 the example specific code with your development.
 
-You could also download build.gradle and gradle.properties and integrate them
-into your project.
+Make sure that the gradle standard task `distZip` is available to your builds. 
+It is available, if your plugins closure contains the application plugin:  
+`plugins {
+     id 'application
+ }`.  
+ It is missing if only the java plugin is configured:  
+ `plugins {
+      id 'java'
+  }
+` 
 
-In a later version we might present more elaborate ways of integration.
 
 ### Configuration and Use
 #### Project Specific Values in `gradle.properties`
@@ -58,7 +70,7 @@ targetpath = xdev/runjava
 # output directory of build process
 buildOutput = build/distributions
 ```
-#### Cross Development Tasks in `build.gradle`
+#### Cross Development Tasks in `crossdev.gradle`
 The following tasks are provided:
 1. **testRemoteLogin**  
    Login to target machine and show some identifying output on standard output.   
