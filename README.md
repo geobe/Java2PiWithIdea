@@ -48,15 +48,14 @@ It is available, if your plugins closure contains the application plugin:
 `plugins {
      id 'application
  }`.  
- It is missing if only the java plugin is configured like this:  
- `plugins {
+ It is missing if only the java plugin is configured like this, so change it:  
+ ` plugins {
       id 'java'
-  }`.
+  }`.  
   The `distZip` task needs to know your main class to generate a shell script or 
   `.bat` file to start your program on the target. So make sure your `build.gradle` 
   defines a main class like in the example:  
-  `
-  mainClassName = 'de.geobe.java2pi.hello.RaspiHello'
+  `mainClassName = 'de.geobe.java2pi.hello.RaspiHello'
   ` 
 
 
