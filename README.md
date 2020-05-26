@@ -48,11 +48,16 @@ It is available, if your plugins closure contains the application plugin:
 `plugins {
      id 'application
  }`.  
- It is missing if only the java plugin is configured:  
+ It is missing if only the java plugin is configured like this:  
  `plugins {
       id 'java'
-  }
-` 
+  }`.
+  The `distZip` task needs to know your main class to generate a shell script or 
+  `.bat` file to start your program on the target. So make sure your `build.gradle` 
+  defines a main class like in the example:  
+  `
+  mainClassName = 'de.geobe.java2pi.hello.RaspiHello'
+  ` 
 
 
 ### Configuration and Use
@@ -69,6 +74,9 @@ keyfilepath= d:/usr/geb/.ssh/id_rsa
 targetpath = xdev/runjava
 # output directory of build process
 buildOutput = build/distributions
+# set true for running with sudo on target machine, 
+# any other value will run as normal user
+runsudo = true
 ```
 #### Cross Development Tasks in `crossdev.gradle`
 The following tasks are provided:

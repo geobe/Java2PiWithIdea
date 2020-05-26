@@ -137,10 +137,12 @@ void fDistAll() {
         x = commandLine 'scp', '-r', '-i', "${keyfilepath}", "${buildOutput}/${rootProject.name}-${version}", "${remoteHome}:${targetpath}"
     }
     println x
-    // edit generated *nix startup script to start target program as sudo.
-    // is only needed if program needs root privileges, e.g. access gpio on a raspi
-    exec {
-        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "sed -i -e s/'exec '/'sudo '/ ${targetpath}/${rootProject.name}-${version}/bin/${rootProject.name}"
+    if (runsudo == 'true') {
+        // edit generated *nix startup script to start target program as sudo.
+        // is only needed if program needs root privileges, e.g. access gpio on a raspi
+        exec {
+            x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "sed -i -e s/'exec '/'sudo '/ ${targetpath}/${rootProject.name}-${version}/bin/${rootProject.name}"
+        }
     }
     // make startup script executable
     exec {
@@ -164,7 +166,8 @@ void distributeBuildAndRun() {
     def x
     fDistBuild()
     exec {
-        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "sh -c 'echo \$\$; exec ${targetpath}/${rootProject.name}-${version}/bin/${rootProject.name}' & " //"uname -mnos"
+        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "sh -c 'echo \$\$; exec ${targetpath}/${rootProject.name}-${version}/bin/${rootProject.name}' & "
+        //"uname -mnos"
     }
     println x
 }
@@ -176,7 +179,8 @@ void distributeAllAndRun() {
     def x
     fDistAll()
     exec {
-        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "sh -c 'echo \$\$; exec ${targetpath}/${rootProject.name}-${version}/bin/${rootProject.name}' & " //"uname -mnos"
+        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "sh -c 'echo \$\$; exec ${targetpath}/${rootProject.name}-${version}/bin/${rootProject.name}' & "
+        //"uname -mnos"
     }
     println x
 }
@@ -187,7 +191,8 @@ void distributeAllAndRun() {
 void remoteLogin() {
     def x
     exec {
-        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "sh -c 'echo \$\$; exec ${targetpath}/${rootProject.name}-${version}/bin/${rootProject.name}' & " //"uname -mnos"
+        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "sh -c 'echo \$\$; exec ${targetpath}/${rootProject.name}-${version}/bin/${rootProject.name}' & "
+        //"uname -mnos"
     }
     println x
 }
