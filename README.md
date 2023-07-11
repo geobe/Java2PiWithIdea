@@ -35,7 +35,8 @@ tasks into the Gradle build script `build.gradle`:
 * Site specific parameters are set in gradle.properties
 
 The easiest way to use the cross development tasks is to apply `crossdev.gradle` from this 
-project repository into your `build.gradle` configuration file:
+project repository into your project. This is done by including the following line into
+your `build.gradle` configuration file.
 
 `
 apply from: 'https://raw.githubusercontent.com/geobe/Java2PiWithIdea/master/crossdev.gradle'
@@ -45,15 +46,21 @@ Alternatively, you can also clone this repository,
 test, if the simple RaspiHello program is running on your target and substitute 
 the example specific code with your development.
 
-Make sure that the gradle standard task `distZip` is available to your builds. 
-It is available, if your plugins closure contains the application plugin:  
-`plugins {
-     id 'application
- }`.  
+### Make `distZip` gradle task available
+Be sure that the gradle standard task `distZip` is available to your builds. 
+It is available, if your plugins closure contains the application plugin, e.g.:  
+``` groovy
+ plugins {
+     id 'application'
+     id 'java'
+ }
+ ```  
  It is missing if only the java plugin is configured like this, so change it:  
- ` plugins {
+ ``` groovy
+ plugins {
       id 'java'
-  }`.  
+ }
+  ```  
   The `distZip` task needs to know your main class to generate a shell script or 
   `.bat` file to start your program on the target. So make sure your `build.gradle` 
   defines a main class like in the example:  
