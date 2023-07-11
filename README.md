@@ -1,5 +1,5 @@
-## Java To Pi With Gradle and Idea
-RaspberryPi cross development for Java and other JVM languages 
+## Java To Pi Cross Development With Gradle and Idea
+IntelliJ IDEA cross development targeting RaspberryPi (or other Linux Systems) for Java and other JVM languages 
 ( Groovy, Kotlin, ...) using Gradle. 
 This works well for IntelliJ IDEA (community and ultimate), tested on Windows 10 and Linux.
 ### Preparing the Environment
@@ -34,11 +34,13 @@ tasks into the Gradle build script `build.gradle`:
 * Tasks and helper methods are coded in crossdev.gradle
 * Site specific parameters are set in gradle.properties
 
-The easiest way to use the cross development tasks is to download the 
-`crossdev.gradle` and `gradle.properties` 
-files into your project folder and include the distribution tasks +
-into your build script with the line  
-`apply from: 'crossdev.gradle'`.  
+The easiest way to use the cross development tasks is to apply `crossdev.gradle` from this 
+project repository into your `build.gradle` configuration file:
+
+`
+apply from: 'https://raw.githubusercontent.com/geobe/Java2PiWithIdea/master/crossdev.gradle'
+`
+
 Alternatively, you can also clone this repository,
 test, if the simple RaspiHello program is running on your target and substitute 
 the example specific code with your development.
@@ -55,7 +57,7 @@ It is available, if your plugins closure contains the application plugin:
   The `distZip` task needs to know your main class to generate a shell script or 
   `.bat` file to start your program on the target. So make sure your `build.gradle` 
   defines a main class like in the example:  
-  `mainClassName = 'de.geobe.java2pi.hello.RaspiHello'
+  `mainClassName = 'de.geobe.java2pi.hello.HelloPigpio'
   ` 
 
 
