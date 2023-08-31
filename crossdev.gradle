@@ -151,7 +151,7 @@ void fDistAll() {
     println x
     // to make symbolic link to loaded version, first remove link to previous version if exists
     exec {
-        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "rm ${targetpath}/${rootProject.name}-latest"
+        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "rm -f ${targetpath}/${rootProject.name}-latest"
     }
     println x
     // create new symbolic link to loaded version
