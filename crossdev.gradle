@@ -149,6 +149,16 @@ void fDistAll() {
         x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "chmod +x ${targetpath}/${rootProject.name}-${version}/bin/${rootProject.name}"
     }
     println x
+    // to make symbolic link to loaded version, first remove link to previous version if exists
+    exec {
+        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "rm ${targetpath}/${rootProject.name}-latest"
+    }
+    println x
+    // create new symbolic link to loaded version
+    exec {
+        x = commandLine 'ssh', '-i', "${keyfilepath}", "${remoteHome}", "ln -s ~/${targetpath}/${rootProject.name}-${version} ${targetpath}/${rootProject.name}-latest"
+    }
+    println x
 }
 
 void makeTargetPath() {
