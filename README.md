@@ -1,3 +1,4 @@
+# Plugin Scripts for Gradle (Groovy Syntax) Build Script
 ## Java To Pi Cross Development With Gradle and Idea
 IntelliJ IDEA cross development targeting RaspberryPi (or other Linux Systems) for Java and other JVM languages 
 ( Groovy, Kotlin, ...) using Gradle. 
@@ -113,3 +114,13 @@ The following tasks are provided:
    distAll had already been used before.
 1. **distBuildAndRunRemote**  
    Distribute the latest build and run it, similar to distAllAndRunRemote.
+
+## Make Build Version from 'build.gradle' Available to Program Classes
+
+Just apply this script to your build file:
+''' groovy
+apply from: 'https://raw.githubusercontent.com/geobe/Java2PiWithIdea/master/versioninfo.gradle'
+'''
+On build, it will copy the version info from 'build.gradle' into a property file
+ 'build/generated-resources/version.properties'. This can be read as shown
+in class [VersionInfo](src/main/java/de/geobe/java2pi/hello/VersionInfo.java)

@@ -29,12 +29,14 @@ plugins {
 // give your project a reasonable group id,
 // optimally based on your unique reverse url
 group = 'de.geobe.java2pi'
-version = '1.4'
+version = '1.5'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
-//sourceCompatibility = 1.8
+
 application {
     mainClass = 'de.geobe.java2pi.hello.RaspiHello'
 }
@@ -43,5 +45,5 @@ repositories {
     mavenCentral()
 }
 
-apply from: 'versioninfo.gradle'
-apply from: 'crossdev.gradle'
+apply from: 'https://raw.githubusercontent.com/geobe/Java2PiWithIdea/master/versioninfo.gradle'
+apply from: 'https://raw.githubusercontent.com/geobe/Java2PiWithIdea/master/crossdev.gradle'
