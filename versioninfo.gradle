@@ -22,12 +22,29 @@
  * SOFTWARE.
  */
 
-package de.geobe.java2pi.hello;
+// Task zum Erzeugen von version.properties
+def generateVersionProperties = tasks.register("generateVersionProperties") {
+    // Provider-basierter Output-Pfad
+    def outputDir = layout.buildDirectory.dir("generated-resources")
 
-public class RaspiHello {
-    public static void main(String[] args) {
-        String version = VersionInfo.getVersion();
-        System.out.printf("Great HELLO of Version %s from %s on %s\n",
-                version, System.getProperty("os.name"), System.getProperty("os.arch"));
+    outputs.dir(outputDir)
+
+    doLast {
+        def dir = outputDir.get().asFile
+        dir.mkdirs()
+        new File(dir, "version.properties").text = "version=${project.version}\n"
+    }
+}
+
+// Warten, bis das application-Plugin aktiv ist
+plugins.withId("application") {
+    // Da application -> java impliziert, sind SourceSets sicher verfügbar
+    sourceSets.named("main") { main ->
+        main.resources.srcDir(layout.buildDirectory.dir("generated-resources"))
+    }
+
+    // processResources soll version.properties generieren
+    tasks.named("processResources") {
+        dependsOn(generateVersionProperties)
     }
 }

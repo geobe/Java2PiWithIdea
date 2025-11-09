@@ -24,10 +24,31 @@
 
 package de.geobe.java2pi.hello;
 
-public class RaspiHello {
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+public class VersionInfo {
+
+    private static final String VERSION_FILE = "/version.properties";
+
+    public static String getVersion() {
+        Properties props = new Properties();
+
+        try (InputStream is = VersionInfo.class.getResourceAsStream(VERSION_FILE)) {
+            if (is == null) {
+                return "unknown";  // Fallback, falls Datei nicht existiert
+            }
+
+            props.load(is);
+            return props.getProperty("version", "unknown");
+        } catch (IOException e) {
+            return "unknown";  // Fallback bei Lesefehler
+        }
+    }
+
     public static void main(String[] args) {
-        String version = VersionInfo.getVersion();
-        System.out.printf("Great HELLO of Version %s from %s on %s\n",
-                version, System.getProperty("os.name"), System.getProperty("os.arch"));
+        System.out.println("Version: " + getVersion());
     }
 }
+
