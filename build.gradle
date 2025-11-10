@@ -29,7 +29,7 @@ plugins {
 // give your project a reasonable group id,
 // optimally based on your unique reverse url
 group = 'de.geobe.java2pi'
-version = '1.5'
+version = '1.6'
 
 java {
     toolchain {

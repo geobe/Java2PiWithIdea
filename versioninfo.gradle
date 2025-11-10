@@ -22,29 +22,34 @@
  * SOFTWARE.
  */
 
-// Task zum Erzeugen von version.properties
+// Task to generate version.properties
 def generateVersionProperties = tasks.register("generateVersionProperties") {
-    // Provider-basierter Output-Pfad
-    def outputDir = layout.buildDirectory.dir("generated-resources")
 
-    outputs.dir(outputDir)
+    // capture version at configuration time via Provider
+    def versionProvider = project.provider { project.version.toString() }
+
+    // declare version as task input
+    inputs.property("version", versionProvider)
+
+//    // Explicit input — Gradle will detect version changes
+//    inputs.property("version", project.version.toString())
+
+    // Declare a single file as task output
+    def outputFile = layout.buildDirectory.file("generated/version.properties")
+    outputs.file(outputFile)
 
     doLast {
-        def dir = outputDir.get().asFile
-        dir.mkdirs()
-        new File(dir, "version.properties").text = "version=${project.version}\n"
+        def file = outputFile.get().asFile
+        file.parentFile.mkdirs()
+        file.text = "version=${versionProvider.get()}\n"
     }
 }
 
-// Warten, bis das application-Plugin aktiv ist
-plugins.withId("application") {
-    // Da application -> java impliziert, sind SourceSets sicher verfügbar
-    sourceSets.named("main") { main ->
-        main.resources.srcDir(layout.buildDirectory.dir("generated-resources"))
-    }
-
-    // processResources soll version.properties generieren
+    // processResources shall generate version.properties
     tasks.named("processResources") {
         dependsOn(generateVersionProperties)
+
+        from(generateVersionProperties.get().outputs.files) {
+            into ""
     }
 }
